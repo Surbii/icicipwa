@@ -526,11 +526,15 @@ class _WebDashboardState extends State<WebDashboard> {
         //mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.only(left: 40, right: 0),
+            padding: const EdgeInsets.only(left: 15, right: 10),
             height: 64,
             color: const Color(0xFFF5F6F7),
             child: Row(
               children: [
+                widthSize<1107?Container(
+                  child: Image.asset("assets/icons/drawer.png"),
+                ):Container(),
+                SizedBox(width: 35),
                 Container(
                   child: Image.asset("assets/icons/logo.png"),
                 ),
@@ -594,13 +598,14 @@ class _WebDashboardState extends State<WebDashboard> {
                     ],
                   ),
                 ),
-                widthSize< 1383?Container(
-                  padding: EdgeInsets.only(left: 150),
-                  child: Image.asset("assets/icons/watchlistsearch.png"),
-                ):Container(
+                widthSize< 1384?Expanded(child: Container()):Container(
                   padding: EdgeInsets.only(left: 20),
                   child: Image.asset("assets/icons/search.png"),
                 ),
+                widthSize< 1384?Container(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Image.asset("assets/icons/watchlistsearch.png"),
+                ):Container(),
                 Container(
                   padding: EdgeInsets.only(left: 20),
                   child: Image.asset("assets/icons/help.png"),
