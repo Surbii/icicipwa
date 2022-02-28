@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
+import '../web/web_dashboard.dart';
 
 class AppDashboard extends StatefulWidget {
   const AppDashboard({Key? key}) : super(key: key);
@@ -13,7 +14,39 @@ class AppDashboard extends StatefulWidget {
 
 class AppDashboardState extends State<AppDashboard> {
   int _selectedIndex = 0;
-
+  Widget leftColumn(String leading, String title){
+    return Container(
+      padding: EdgeInsets.only(left: 15, right: 8),
+      height: 48,
+      decoration: BoxDecoration(
+        border: Border(
+            bottom: BorderSide(
+                color: Color(0xffDCDCDC).withOpacity(0.5)
+            )
+        ),
+        color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Row(
+              children: [
+                Image.asset(leading),
+                SizedBox(width: 10),
+                Text(title, style: TextStyle(
+                    fontSize: 13
+                )),
+              ],
+            ),
+          ),
+          Container(
+            child :Image.asset("assets/icons/arrow.png"),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +65,24 @@ class AppDashboardState extends State<AppDashboard> {
                 onPressed: () {}, icon: Image.asset("assets/icons/notification.png"))
           ],
         ),
-        drawer: const Drawer(),
+        drawer: Drawer(
+          child: Column(
+              children: [
+                leftColumn("assets/icons/stocks.png", "Stocks"),
+                leftColumn("assets/icons/fo.png", "F&O"),
+                leftColumn("assets/icons/mf.png", "Mutual Funds"),
+                leftColumn("assets/icons/commodity.png", "Commodity"),
+                leftColumn("assets/icons/currency.png", "Currency"),
+                leftColumn("assets/icons/fixedincome.png", "Fixed Income"),
+                leftColumn("assets/icons/etf.png", "ETF"),
+                leftColumn("assets/icons/insurance.png", "Insurance"),
+                leftColumn("assets/icons/nps.png", "NPS"),
+                leftColumn("assets/icons/globalinvest.png", "Global Invest"),
+                leftColumn("assets/icons/statements.png", "Statements"),
+                leftColumn("assets/icons/moreproduct.png", "More Products"),
+             ]
+           ),
+        ),
         body: portfolioScreen(),
         bottomNavigationBar: BottomNavigationBar(
           items: bottomBarItems(),
