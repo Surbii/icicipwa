@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:icicipwa/src/theme/app_theme.dart';
+import 'package:icicipwa/src/theme/theme_changer.dart';
+import 'package:provider/provider.dart';
 
 class WebDashboard extends StatefulWidget {
   const WebDashboard({Key? key}) : super(key: key);
@@ -23,7 +26,6 @@ class _WebDashboardState extends State<WebDashboard> {
             color: Color(0xffDCDCDC).withOpacity(0.5)
           )
         ),
-        color: Colors.white,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,16 +33,17 @@ class _WebDashboardState extends State<WebDashboard> {
           Container(
             child: Row(
               children: [
-                Image.asset(leading),
+                Image.asset(leading, color: Theme.of(context).primaryColor),
                 SizedBox(width: 10),
                 Text(title, style: TextStyle(
-                    fontSize: 13
+                    fontSize: 13,
+                    color: Theme.of(context).textTheme.bodyText1?.color
                 )),
               ],
             ),
           ),
           Container(
-            child :Image.asset("assets/icons/arrow.png"),
+            child :Image.asset("assets/icons/arrow.png", color: Theme.of(context).primaryColor),
           ),
         ],
       ),
@@ -56,7 +59,7 @@ class _WebDashboardState extends State<WebDashboard> {
             color: Color(0xffDCDCDC).withOpacity(0.5)
           ),
         ),
-        color: Color(0xffFFFFFF),
+        //color: Color(0xffFFFFFF),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -67,11 +70,11 @@ class _WebDashboardState extends State<WebDashboard> {
               children: [
                 Text(name, style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff353535)
+                    color: Theme.of(context).textTheme.bodyText1?.color
                 )),
                 Text(price, style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff353535)
+                    color: Theme.of(context).textTheme.bodyText1?.color
                 )),
               ],
             ),
@@ -117,10 +120,10 @@ class _WebDashboardState extends State<WebDashboard> {
                   Container(
                     child: Row(
                       children: [
-                        Image.asset(leadingIcon),
+                        Image.asset(leadingIcon, color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:null),
                         SizedBox(width: 5),
                         Text(title, style: TextStyle(
-                            color: Color(0xff353535),
+                            color: Theme.of(context).textTheme.bodyText1?.color,
                             fontSize: 16,
                             fontWeight: FontWeight.w400
                         ))
@@ -162,7 +165,7 @@ class _WebDashboardState extends State<WebDashboard> {
                           fontWeight: FontWeight.w400
                       )),
                       Text(currentValue, style: TextStyle(
-                          color: Color(0xff353535),
+                          color: Theme.of(context).textTheme.bodyText1?.color,
                           fontSize: 14,
                           fontWeight: FontWeight.w500
                       ))
@@ -198,7 +201,7 @@ class _WebDashboardState extends State<WebDashboard> {
                       fontWeight: FontWeight.w400
                   )),
                   Text(investment, style: TextStyle(
-                      color: Color(0xff353535),
+                      color: Theme.of(context).textTheme.bodyText1?.color,
                       fontSize: 14,
                       fontWeight: FontWeight.w500
                   ))
@@ -233,7 +236,7 @@ class _WebDashboardState extends State<WebDashboard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(title, style: TextStyle(
-                          color: Color(0xff353535),
+                          color: Theme.of(context).textTheme.bodyText1?.color,
                           fontSize: 14,
                           fontWeight: FontWeight.w500
                       )),
@@ -298,7 +301,7 @@ class _WebDashboardState extends State<WebDashboard> {
             Container(
               padding: EdgeInsets.only(left: 30, right: 30,),
               child: Text(title, style: TextStyle(
-                color: Color(0xff353535),
+                color: Theme.of(context).textTheme.bodyText1?.color,
                 fontSize: 18,
                 fontWeight: FontWeight.w500
               )),
@@ -321,7 +324,7 @@ class _WebDashboardState extends State<WebDashboard> {
                           )),
                           SizedBox(height: 8),
                           Text(currentValue, style: TextStyle(
-                            color: Color(0xff353535),
+                            color: Theme.of(context).textTheme.bodyText1?.color,
                             fontSize: 16,
                             fontWeight: FontWeight.w500
                           )),
@@ -374,7 +377,7 @@ class _WebDashboardState extends State<WebDashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(hide == false?"View Details":"View Recommended", style: TextStyle(
-                      color: Color(0xff053D6E),
+                      color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:Color(0xff053D6E),
                       fontSize: 14,
                       fontWeight: FontWeight.w600
                     )
@@ -424,13 +427,13 @@ class _WebDashboardState extends State<WebDashboard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(subTitle, style: TextStyle(
-                            color: Color(0xff353535),
+                            color: Theme.of(context).textTheme.bodyText1?.color,
                             fontSize: 12,
                             fontWeight: FontWeight.w400
                           ), softWrap: true),
                           SizedBox(height: 30),
                           Text(footer, style: TextStyle(
-                              color: Color(0xff053D6E),
+                              color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:Color(0xff053D6E),
                               fontSize: 14,
                               fontWeight: FontWeight.w600
                             ),
@@ -467,7 +470,7 @@ class _WebDashboardState extends State<WebDashboard> {
           border: Border.all(
             color: color
           ),
-          color: Color(0xffEFF6FF)
+          color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black26:Color(0xffEFF6FF)
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -480,13 +483,13 @@ class _WebDashboardState extends State<WebDashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: TextStyle(
-                      color: color,
+                      color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.white:color,
                       fontSize: 20,
                       fontWeight: FontWeight.w500
                     )),
                     SizedBox(height: 20),
                     Text(content, style: TextStyle(
-                      color: Color(0xff353535),
+                      color: Theme.of(context).textTheme.bodyText1?.color,
                       fontSize: 16,
                       fontWeight: FontWeight.w400
                     )),
@@ -494,7 +497,7 @@ class _WebDashboardState extends State<WebDashboard> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: color,
+                        color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:color,
                       ),
                       padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
                       child: Text(buttonName, style: TextStyle(
@@ -510,7 +513,7 @@ class _WebDashboardState extends State<WebDashboard> {
             Container(
               // height: 200,
               // width: 200,
-              child: Image.asset(icon)
+              child: Image.asset(icon, color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.white:null)
             )
           ],
         ),
@@ -528,7 +531,15 @@ class _WebDashboardState extends State<WebDashboard> {
           Container(
             padding: const EdgeInsets.only(left: 15, right: 10),
             height: 64,
-            color: const Color(0xFFF5F6F7),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Color(0xffDCDCDC).withOpacity(0.5):Color(0xFFF5F6F7),
+                ),
+              ),
+              color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black:Color(0xFFF5F6F7),
+            ),
+            //color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black:Color(0xFFF5F6F7),
             child: Row(
               children: [
                 widthSize<1107?Container(
@@ -604,23 +615,23 @@ class _WebDashboardState extends State<WebDashboard> {
                 ),
                 widthSize< 1384?Container(
                   padding: EdgeInsets.only(left: 20),
-                  child: Image.asset("assets/icons/watchlistsearch.png"),
+                  child: Image.asset("assets/icons/watchlistsearch.png", color: Theme.of(context).primaryColor),
                 ):Container(),
                 Container(
                   padding: EdgeInsets.only(left: 20),
-                  child: Image.asset("assets/icons/help.png"),
+                  child: Image.asset("assets/icons/help.png", color: Theme.of(context).primaryColor),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 20),
-                  child: Image.asset("assets/icons/community.png"),
+                  child: Image.asset("assets/icons/community.png", color: Theme.of(context).primaryColor),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 20),
-                  child: Image.asset("assets/icons/notification.png"),
+                  child: Image.asset("assets/icons/notification.png", color: Theme.of(context).primaryColor),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 60),
-                  child: Image.asset("assets/icons/profile.png"),
+                  child: Image.asset("assets/icons/profile.png", ),
                 ),
               ],
             ),
@@ -639,7 +650,7 @@ class _WebDashboardState extends State<WebDashboard> {
                         color: Color(0xffDCDCDC).withOpacity(0.5)
                       ),
                     ),
-                    color: Colors.white,
+                    color: Provider.of<ThemeChanger>(context, listen: false).getDark()?Colors.black:Colors.white,
                   ),
                   width: 170,
                   child: Column(
@@ -668,11 +679,17 @@ class _WebDashboardState extends State<WebDashboard> {
                             Container(
                               child: Row(
                                 children: [
-                                  Image.asset("assets/icons/darkmode.png"),
+                                  Image.asset("assets/icons/darkmode.png", color: Theme.of(context).primaryColor),
                                   SizedBox(width: 10),
-                                  Text("Dark Mode", style: TextStyle(
-                                      fontSize: 14
-                                  )),
+                                  InkWell(
+                                    onTap: (){
+                                      Provider.of<ThemeChanger>(context, listen: false).setTheme(Provider.of<ThemeChanger>(context, listen: false).getDark() == false?AppThemes.darkTheme():AppThemes.lightTheme());
+                                    },
+                                    child: Text("Dark Mode", style: TextStyle(
+                                      fontSize: 14,
+                                      color: Theme.of(context).textTheme.bodyText1?.color
+                                    )),
+                                  ),
                                 ],
                               ),
                             )
@@ -685,7 +702,7 @@ class _WebDashboardState extends State<WebDashboard> {
                 ),
                 Expanded(
                   child: Container(
-                    color: Color(0xffF5F6F7),
+                    color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black:Color(0xffF5F6F7),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -698,7 +715,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                   color: Color(0xffDCDCDC).withOpacity(0.5)
                                 )
                               ),
-                              color: Color(0xffFFFFFF),
+                              color: Theme.of(context).backgroundColor,
                             ),
                           // color: Color(0xffFFFFFF),
                           child: Row(
@@ -716,7 +733,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text("Market Open", style: TextStyle(
-                                            color: Color(0xff353535),
+                                            color: Theme.of(context).textTheme.bodyText1?.color,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400
                                           )),
@@ -754,7 +771,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                       Flexible(
                                         child: Container(
                                           child: Text("Orders", style: TextStyle(
-                                            color: Color(0xff353535),
+                                            color: Theme.of(context).textTheme.bodyText1?.color,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500
                                           )),
@@ -764,7 +781,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                       Flexible(
                                         child: Container(
                                           child: Text("Positions", style: TextStyle(
-                                            color: Color(0xff353535),
+                                            color: Theme.of(context).textTheme.bodyText1?.color,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500
                                           )),
@@ -774,7 +791,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                       Flexible(
                                         child: Container(
                                           child: Text("Funds", style: TextStyle(
-                                            color: Color(0xff353535),
+                                            color: Theme.of(context).textTheme.bodyText1?.color,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500
                                           )),
@@ -784,9 +801,9 @@ class _WebDashboardState extends State<WebDashboard> {
                                       Flexible(
                                         child: Container(
                                           child: Text("Research", style: TextStyle(
-                                            color: Color(0xff353535),
+                                            color: Theme.of(context).textTheme.bodyText1?.color,
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w500
+                                            fontWeight: FontWeight.w500,
                                           )),
                                         ),
                                       ),
@@ -795,7 +812,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                 ),
                               ),
                               Container(
-                                child: Image.asset("assets/icons/star.png")
+                                child: Image.asset("assets/icons/star.png", color: Theme.of(context).primaryColor)
                               )
                             ],
                           )
@@ -808,14 +825,14 @@ class _WebDashboardState extends State<WebDashboard> {
                                 color: Color(0xffDCDCDC).withOpacity(0.5)
                               )
                             ),
-                            color: Color(0xffFFFFFF),
+                            color: Theme.of(context).backgroundColor,
                           ),
                           child: Row(
                             children: [
                               Expanded(
                                 child: Container(
                                   child: Text("u can use Share as Margin facility for trading in Margin Plus also. With Shares as Margin, you can treat limits from your existing stock holdings and capitalize market volatility", style: TextStyle(
-                                    color: Color(0xff80878E),
+                                    color: Theme.of(context).textTheme.bodyText1?.color,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                     wordSpacing: 1
@@ -865,7 +882,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                                                 )),
                                                                 SizedBox(height: 5),
                                                                 Text("₹ 76,269,442.44", style: TextStyle(
-                                                                    color: Color(0xff353535),
+                                                                    color: Theme.of(context).textTheme.bodyText1?.color,
                                                                     fontSize: 28,
                                                                     fontWeight: FontWeight.w500
                                                                 )),
@@ -883,7 +900,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                                                 )),
                                                                 SizedBox(height: 5),
                                                                 Text("₹ 10,000,000.00", style: TextStyle(
-                                                                    color: Color(0xff353535),
+                                                                    color: Theme.of(context).textTheme.bodyText1?.color,
                                                                     fontSize: 22,
                                                                     fontWeight: FontWeight.w500
                                                                 )),
@@ -901,7 +918,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                                                 )),
                                                                 SizedBox(height: 5),
                                                                 Text("₹ 70,000,000.00", style: TextStyle(
-                                                                    color: Color(0xff353535),
+                                                                    color: Theme.of(context).textTheme.bodyText1?.color,
                                                                     fontSize: 22,
                                                                     fontWeight: FontWeight.w500
                                                                 )),
@@ -926,7 +943,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                                               child: Row(
                                                                 children: [
                                                                   Text("Show Details", style: TextStyle(
-                                                                    color: Color(0xff053D6E),
+                                                                    color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:Color(0xff053D6E),
                                                                     fontSize: 16,
                                                                     fontWeight: FontWeight.w600
                                                                   )),
@@ -942,7 +959,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                                                 Image.asset("assets/icons/mf.png", color: Color(0xff053D6E),),
                                                                 SizedBox(width: 5),
                                                                 Text("Analyze", style: TextStyle(
-                                                                  color: Color(0xff053D6E),
+                                                                  color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:Color(0xff053D6E),
                                                                   fontSize: 16,
                                                                   fontWeight: FontWeight.w600
                                                                 )),
@@ -958,7 +975,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                             ),
                                             SizedBox(width: 50),
                                             Container(
-                                              child: Image.asset("assets/icons/smile.png", color: Color(0xff053D6E)),
+                                              child: Image.asset("assets/icons/smile.png", color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:Color(0xff053D6E)),
                                             ),
                                           ],
                                         ),
@@ -966,13 +983,13 @@ class _WebDashboardState extends State<WebDashboard> {
                                       SizedBox(height: 15),
                                       showDetails == true?Container(
                                         padding: EdgeInsets.only(top: 25, bottom: 25, left: 40, right: 40),
-                                        color: Color(0xffF5F6F7),
+                                        color: Provider.of<ThemeChanger>(context).getDark()?Colors.black26:Color(0xffF5F6F7),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
                                             Expanded(child: seeAll("assets/icons/portfoliostocks.png", "Stocks", "assets/icons/arrow.png", "-174.65(0.96%)", "₹ 10,63,862.00", "(+8.96%)", "₹ 305,715.00")),
                                             SizedBox(width: 12),
-                                            Expanded(child: seeAll("assets/icons/portfoliomf.png", "Stocks", "assets/icons/arrow.png", "-151.65(0.71%)", "₹ 10,00,336.00", "(+7.71%)", "₹ 295,425.00")),
+                                            Expanded(child: seeAll("assets/icons/portfoliomf.png", "Mutual Funds", "assets/icons/arrow.png", "-151.65(0.71%)", "₹ 10,00,336.00", "(+7.71%)", "₹ 295,425.00")),
                                           ],
                                         ),
                                       ):Container()
@@ -1057,7 +1074,6 @@ class _WebDashboardState extends State<WebDashboard> {
                     children: [
                       Container(
                         height: 65,
-                        color: Color(0xffFFFFFF),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -1066,7 +1082,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                 children: [
                                   Text("WATCHLIST 1", style: TextStyle(
                                     fontSize: 16,
-                                    color: Color(0xff353535)
+                                    color: Theme.of(context).textTheme.bodyText1?.color
                                   )),
                                   SizedBox(width: 5),
                                   Image.asset("assets/icons/watchlistdrop.png")
@@ -1088,7 +1104,7 @@ class _WebDashboardState extends State<WebDashboard> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Image.asset("assets/icons/watchlistsearch.png"),
+                            Image.asset("assets/icons/watchlistsearch.png", color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.white:Colors.black),
                             Image.asset("assets/icons/watchlistfilter.png"),
                           ],
                         ),

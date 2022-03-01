@@ -47,6 +47,56 @@ class AppDashboardState extends State<AppDashboard> {
       ),
     );
   }
+  Widget rightColumn(String name, String price, String stockType, String pl){
+    return Container(
+      padding: EdgeInsets.only(top: 5),
+      height: 50,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+              color: Color(0xffDCDCDC).withOpacity(0.5)
+          ),
+        ),
+        color: Color(0xffFFFFFF),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(name, style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xff353535)
+                )),
+                Text(price, style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xff353535)
+                )),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(stockType, style: TextStyle(
+                    fontSize: 10,
+                    color: Color(0xff80878E)
+                )),
+                Text(pl, style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xff5FC85F)
+                )),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +133,26 @@ class AppDashboardState extends State<AppDashboard> {
              ]
            ),
         ),
-        body: portfolioScreen(),
+        body: _selectedIndex == 1?(Container(
+          padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+          child: ListView(
+            //mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              rightColumn("USDINR 04 Feb 22 68.00 CE", "₹ 75.7300", "BSE", "42.60(6.06%)"),
+              rightColumn("Gold 25 MAR 22 51200.00 CE", "₹ 5134.00", "BSE", "21.40(3.10%)"),
+              rightColumn("BPCL", "₹ 376.05", "BSE", "3.90(0.94%)"),
+              rightColumn("CADILAHC", "₹ 397.50", "BSE", "0.80(0.20%)"),
+              rightColumn("CDSL", "₹ 1502.50", "BSE", "0.80(0.20%)"),
+              rightColumn("CIPLA", "₹ 899.10", "BSE", "7.40(0.83%)"),
+              rightColumn("DALMIASUG", "₹ 423.70", "BSE", "10.10(2.44%)"),
+              rightColumn("DMART", "₹ 4053.70", "BSE", "19.05(0.47%)"),
+              rightColumn("FEDERALBNK", "₹ 93.85", "BSE", "2.05(2.23)"),
+              rightColumn("HDFCBANK", "₹ 1461.25", "BSE", "26.10(1.75%)"),
+              rightColumn("ICICIBANK", "₹ 795.70", "BSE", "2.50(0.30%)"),
+              rightColumn("INFY", "₹ 1693.90", "BSE", "3.75(0.98%)"),
+            ],
+          ),
+        )):_selectedIndex == 2?Container(child: Center(child: Text("Page under construction!"),)):_selectedIndex == 3?Container(child: Center(child: Text("No Research History Found.\n\nPage under construction!"),)):_selectedIndex == 4?Container(child: Center(child: Text("No orders yet!"),)):portfolioScreen(),
         bottomNavigationBar: BottomNavigationBar(
           items: bottomBarItems(),
           type: BottomNavigationBarType.fixed,
