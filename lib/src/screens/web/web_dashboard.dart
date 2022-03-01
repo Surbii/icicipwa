@@ -543,7 +543,7 @@ class _WebDashboardState extends State<WebDashboard> {
             child: Row(
               children: [
                 widthSize<1107?Container(
-                  child: Image.asset("assets/icons/drawer.png"),
+                  child: Image.asset("assets/icons/drawer.png", color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:null),
                 ):Container(),
                 SizedBox(width: 35),
                 Container(

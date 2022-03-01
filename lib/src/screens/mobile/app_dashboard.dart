@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:icicipwa/src/theme/app_theme.dart';
+import 'package:icicipwa/src/theme/theme_changer.dart';
+import 'package:provider/provider.dart';
 
 import 'colors.dart';
 import '../web/web_dashboard.dart';
@@ -14,6 +17,7 @@ class AppDashboard extends StatefulWidget {
 
 class AppDashboardState extends State<AppDashboard> {
   int _selectedIndex = 0;
+  bool isShow = false;
   Widget leftColumn(String leading, String title){
     return Container(
       padding: EdgeInsets.only(left: 15, right: 8),
@@ -24,7 +28,7 @@ class AppDashboardState extends State<AppDashboard> {
                 color: Color(0xffDCDCDC).withOpacity(0.5)
             )
         ),
-        color: Colors.white,
+        //color: Colors.white,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +36,7 @@ class AppDashboardState extends State<AppDashboard> {
           Container(
             child: Row(
               children: [
-                Image.asset(leading),
+                Image.asset(leading, color: Theme.of(context).primaryColor),
                 SizedBox(width: 10),
                 Text(title, style: TextStyle(
                     fontSize: 13
@@ -57,7 +61,7 @@ class AppDashboardState extends State<AppDashboard> {
               color: Color(0xffDCDCDC).withOpacity(0.5)
           ),
         ),
-        color: Color(0xffFFFFFF),
+        //color: Color(0xffFFFFFF),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -68,11 +72,11 @@ class AppDashboardState extends State<AppDashboard> {
               children: [
                 Text(name, style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff353535)
+                    color: Theme.of(context).textTheme.bodyText1?.color
                 )),
                 Text(price, style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff353535)
+                    color: Theme.of(context).textTheme.bodyText1?.color
                 )),
               ],
             ),
@@ -101,18 +105,18 @@ class AppDashboardState extends State<AppDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: black),
+          iconTheme: IconThemeData(color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:Colors.black),
           toolbarHeight: 64,
           elevation: 0,
-          backgroundColor: Color(0xFFF5F6F7),
+          backgroundColor: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black:Color(0xFFF5F6F7),
           title: Image.asset("assets/icons/logo.png"),
           actions: [
             IconButton(
-                onPressed: () {}, icon: Image.asset("assets/icons/help.png")),
+                onPressed: () {}, icon: Image.asset("assets/icons/help.png", color: Theme.of(context).primaryColor)),
             IconButton(
-                onPressed: () {}, icon: Image.asset("assets/icons/community.png")),
+                onPressed: () {}, icon: Image.asset("assets/icons/community.png", color: Theme.of(context).primaryColor)),
             IconButton(
-                onPressed: () {}, icon: Image.asset("assets/icons/notification.png"))
+                onPressed: () {}, icon: Image.asset("assets/icons/notification.png", color: Theme.of(context).primaryColor))
           ],
         ),
         drawer: Drawer(
@@ -130,6 +134,37 @@ class AppDashboardState extends State<AppDashboard> {
                 leftColumn("assets/icons/globalinvest.png", "Global Invest"),
                 leftColumn("assets/icons/statements.png", "Statements"),
                 leftColumn("assets/icons/moreproduct.png", "More Products"),
+                SizedBox(height: 15),
+                Container(
+                  child: Image.asset("assets/icons/default_pro.png"),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Row(
+                    children: [
+                      Container(
+                        child: Row(
+                          children: [
+                            Image.asset("assets/icons/darkmode.png", color: Theme.of(context).primaryColor),
+                            SizedBox(width: 10),
+                            InkWell(
+                              onTap: (){
+                                Provider.of<ThemeChanger>(context, listen: false).setTheme(Provider.of<ThemeChanger>(context, listen: false).getDark() == false?AppThemes.darkTheme():AppThemes.lightTheme());
+                                Navigator.pop(context);
+                              },
+                              child: Text("Dark Mode", style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).textTheme.bodyText1?.color
+                              )),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15),
              ]
            ),
         ),
@@ -224,14 +259,14 @@ class AppDashboardState extends State<AppDashboard> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 25,
-                                  color: black))),
+                                  color: Theme.of(context).textTheme.bodyText1?.color))),
                       trailing: TextButton.icon(
                         onPressed: () {},
-                        icon: Image.asset("assets/icons/mf.png"),
+                        icon: Image.asset("assets/icons/mf.png", ),
                         label: Text(
                           "Analyse",
                           style: TextStyle(
-                              color: darkBlue,
+                              color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue,
                               fontSize: 18,
                               fontWeight: FontWeight.w500),
                         ),
@@ -254,7 +289,7 @@ class AppDashboardState extends State<AppDashboard> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 20,
-                                        color: black))
+                                        color: Theme.of(context).textTheme.bodyText1?.color))
                               ],
                             ),
                             Column(
@@ -266,7 +301,7 @@ class AppDashboardState extends State<AppDashboard> {
                                       style: TextStyle(color: grey)),
                                   const TextSpan(
                                       text: '(+8.96%)',
-                                      style: TextStyle(color: Colors.greenAccent))
+                                      style: TextStyle(color: Colors.lightGreen))
                                 ])),
                                 const SizedBox(
                                   height: 5,
@@ -275,7 +310,7 @@ class AppDashboardState extends State<AppDashboard> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 20,
-                                        color: black))
+                                        color: Theme.of(context).textTheme.bodyText1?.color))
                               ],
                             ),
                           ],
@@ -284,19 +319,34 @@ class AppDashboardState extends State<AppDashboard> {
                       height: 15,
                     ),
                     InkWell(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Show Details"),
-                            Icon(Icons.arrow_drop_down_sharp)
-                          ],
-                        )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:  [
+                          Text("Show Details"),
+                          Icon(Icons.arrow_drop_down_sharp)
+                        ],
+                      ),
+                      onTap: () {
+                        isShow = isShow?false:true;
+                        setState(() {});
+                      },
+                    ),
                     const SizedBox(
                       height: 15,
                     ),
                   ],
                 ),
               ),
+              isShow
+                  ? Container(
+                height: 200,
+                margin: const EdgeInsets.only(top: 15),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: getServiceList(),
+                ),
+              )
+                  : const SizedBox(),
               Container(
                 height: 85,
                 margin: const EdgeInsets.symmetric(vertical: 15),
@@ -336,7 +386,7 @@ class AppDashboardState extends State<AppDashboard> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 20,
-                                            color: black))
+                                            color: Theme.of(context).textTheme.bodyText1?.color))
                                   ],
                                 ),
                                 Column(
@@ -368,7 +418,7 @@ class AppDashboardState extends State<AppDashboard> {
                     title: Text(
                       "View Details",
                       style:
-                      TextStyle(color: darkBlue, fontWeight: FontWeight.w500),
+                      TextStyle(color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.w500),
                     ),
                     trailing: const Icon(
                       Icons.arrow_forward_ios_rounded,
@@ -387,7 +437,61 @@ class AppDashboardState extends State<AppDashboard> {
                   "You don’t have any One Click Mutual Funds yet.",
                   "View Recommended",
                   null),
+              Container(
+                height: 150,
+                margin: const EdgeInsets.symmetric(vertical: 15),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: getProgramList(),
+                ),
+              ),
             ],
+          ),
+          Card(
+            child: Container(
+              color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black26:Colors.blue.shade50,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    "assets/icons/success.png",
+                    width: 280,
+                    color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.white:null,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "Learn terms of investment & get investment ideas",
+                    style: TextStyle(
+                        color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.white:darkBlue, fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Explore the school of investments with ICICI & put your financial affairs in order",
+                    style: TextStyle(fontSize: 14, color: Theme.of(context).textTheme.bodyText1?.color),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width,
+                    onPressed: () {},
+                    padding: EdgeInsets.all(15),
+                    color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:darkBlue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                    child: Text(
+                      "Start Learning",
+                      style: TextStyle(color: white, fontSize: 18),
+                    ),
+                  )
+                ],
+              ),
+            ),
           )
         ]));
   }
@@ -396,13 +500,15 @@ class AppDashboardState extends State<AppDashboard> {
     return List.generate(
         2,
             (i) => Container(
-          margin: const EdgeInsets.only(right: 15),
+          margin: const EdgeInsets.only(right: 10),
           width: MediaQuery.of(context).size.width * .8,
           child: Card(
               child: ListTile(
                 leading: Image.asset("assets/icons/ipo.png"),
-                tileColor: white,
-                title: Text("IPO - Initial Public Offering"),
+                //tileColor: white,
+                title: Text(i == 0
+                    ? "IPO - Initial Public Offering"
+                    : "SGB - Sovereign Gold Bond"),
                 subtitle: Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Row(
@@ -410,22 +516,22 @@ class AppDashboardState extends State<AppDashboard> {
                         Row(
                           children: [
                             Image.asset("assets/icons/open.png"),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text("2 Open")
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Row(
                           children: [
                             Image.asset("assets/icons/upcomming.png"),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Text("3 Upcoming")
+                            const Text("3 Upcoming")
                           ],
                         ),
                       ],
@@ -463,10 +569,10 @@ class AppDashboardState extends State<AppDashboard> {
           height: 1,
         ),
         ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 15),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           title: Text(
             viewText,
-            style: TextStyle(color: darkBlue, fontWeight: FontWeight.w500),
+            style: TextStyle(color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.bold),
           ),
           trailing: const Icon(
             Icons.arrow_forward_ios_rounded,
@@ -476,4 +582,467 @@ class AppDashboardState extends State<AppDashboard> {
       ]),
     );
   }
+
+  getProgramList() {
+    return List.generate(2, (i) {
+      return Container(
+          margin: const EdgeInsets.only(right: 15),
+          padding: const EdgeInsets.all(15),
+          width: MediaQuery.of(context).size.width * .8,
+          decoration: BoxDecoration(
+            border: Border.all(color: i == 0 ? Color(0xffBF5698) : Color(0xffEB9923)),
+            //color: white,
+            borderRadius: const BorderRadius.all(
+                Radius.circular(8.0) //                 <--- border radius here
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                i == 0
+                    ? "Free hour - Margin Trade Plus"
+                    : "Buy Now - Pay Later",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 19,
+                    color: i == 0 ? Color(0xffBF5698) : Color(0xffEB9923)),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(i == 0 ? "from 2:30 PM to 3:30 PM" : "Now in trading tool"),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      i == 0 ? "Register for Free" : "Pay Later with MTF",
+                      style: TextStyle(
+                          color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.bold),
+                    ),
+                    Image.asset(i == 0
+                        ? "assets/icons/freeHour.png"
+                        : "assets/icons/buyTime.png", )
+                  ])
+            ],
+          ));
+    });
+  }
+
+  getServiceList() {
+    return List.generate(
+      2,
+          (i) => Container(
+          margin: const EdgeInsets.only(right: 10),
+          width: MediaQuery.of(context).size.width * .65,
+          child: seeAll(
+              i == 0
+                  ? "assets/icons/portfoliostocks.png"
+                  : "assets/icons/portfoliomf.png",
+              i == 0 ? "Stocks" : "Mutual Funds",
+              "assets/icons/arrow.png",
+              i == 0 ? "-174.65(0.96%)" : "-151.65(0.71%)",
+              i == 0 ? "₹ 10,63,862.00" : "₹ 10,00,336.00",
+              i == 0 ? "(+8.96%)" : "(+7.71%)",
+              i == 0 ? "₹ 305,715.00" : "₹ 295,425.00")),
+    );
+  }
+
+  Widget seeAll(String leadingIcon, String title, String trailingIcon,
+      String pl, String currentValue, String returnValue, String investment) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Container(
+        padding:
+        const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+        width: 414,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 52,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Image.asset(leadingIcon, color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:null),
+                        SizedBox(width: 5),
+                        Text(title,
+                            style: TextStyle(
+                                color: Theme.of(context).textTheme.bodyText1?.color,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400))
+                      ],
+                    ),
+                  ),
+                  Image.asset(trailingIcon),
+                ],
+              ),
+            ),
+            Container(
+              height: 38,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Day's P/L",
+                      style: TextStyle(
+                          color: Color(0xff80878E),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400)),
+                  Text(pl,
+                      style: TextStyle(
+                          color: Color(0xffFE303C),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500))
+                ],
+              ),
+            ),
+            Container(
+              height: 38,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Current Value",
+                          style: TextStyle(
+                              color: Color(0xff80878E),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400)),
+                      Text(currentValue,
+                          style: TextStyle(
+                              color: Theme.of(context).textTheme.bodyText1?.color,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500))
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("(Returns)",
+                          style: TextStyle(
+                              color: Color(0xff80878E),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400)),
+                      Text(returnValue,
+                          style: TextStyle(
+                              color: Color(0xff34C758),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500))
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 38,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Investment",
+                      style: TextStyle(
+                          color: Color(0xff80878E),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400)),
+                  Text(investment,
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500))
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+//   portfolioScreen() {
+//     return SingleChildScrollView(
+//         child: Column(children: [
+//           ListView(
+//             padding: const EdgeInsets.all(15),
+//             shrinkWrap: true,
+//             physics: const NeverScrollableScrollPhysics(),
+//             children: [
+//               Card(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     ListTile(
+//                       title: Text(
+//                         "Current Value",
+//                         style: TextStyle(color: grey),
+//                       ),
+//                       subtitle: Container(
+//                           margin: const EdgeInsets.only(top: 5),
+//                           child: Text("₹ 76,269,442.44",
+//                               style: TextStyle(
+//                                   fontWeight: FontWeight.w500,
+//                                   fontSize: 25,
+//                                   color: black))),
+//                       trailing: TextButton.icon(
+//                         onPressed: () {},
+//                         icon: Image.asset("assets/icons/mf.png"),
+//                         label: Text(
+//                           "Analyse",
+//                           style: TextStyle(
+//                               color: darkBlue,
+//                               fontSize: 18,
+//                               fontWeight: FontWeight.w500),
+//                         ),
+//                       ),
+//                     ),
+//                     Container(
+//                         margin: const EdgeInsets.only(left: 15, right: 15, top: 5),
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: [
+//                             Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text('Total Investment',
+//                                     style: TextStyle(color: grey)),
+//                                 const SizedBox(
+//                                   height: 5,
+//                                 ),
+//                                 Text("₹ 10,000,000.00",
+//                                     style: TextStyle(
+//                                         fontWeight: FontWeight.w500,
+//                                         fontSize: 20,
+//                                         color: black))
+//                               ],
+//                             ),
+//                             Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text.rich(TextSpan(children: [
+//                                   TextSpan(
+//                                       text: 'Absolute Gain ',
+//                                       style: TextStyle(color: grey)),
+//                                   const TextSpan(
+//                                       text: '(+8.96%)',
+//                                       style: TextStyle(color: Colors.greenAccent))
+//                                 ])),
+//                                 const SizedBox(
+//                                   height: 5,
+//                                 ),
+//                                 Text("₹ 70,000,000.00",
+//                                     style: TextStyle(
+//                                         fontWeight: FontWeight.w500,
+//                                         fontSize: 20,
+//                                         color: black))
+//                               ],
+//                             ),
+//                           ],
+//                         )),
+//                     const SizedBox(
+//                       height: 15,
+//                     ),
+//                     InkWell(
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             Text("Show Details"),
+//                             Icon(Icons.arrow_drop_down_sharp)
+//                           ],
+//                         )),
+//                     const SizedBox(
+//                       height: 15,
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               Container(
+//                 height: 85,
+//                 margin: const EdgeInsets.symmetric(vertical: 15),
+//                 child: ListView(
+//                   scrollDirection: Axis.horizontal,
+//                   children: getList(),
+//                 ),
+//               ),
+//               Card(
+//                 child:
+//                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//                   Container(
+//                       padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+//                       child: Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             const Text(
+//                               "One Click Equity",
+//                               style: TextStyle(
+//                                   fontSize: 21, fontWeight: FontWeight.w500),
+//                             ),
+//                             const SizedBox(
+//                               height: 10,
+//                             ),
+//                             Row(
+//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                               children: [
+//                                 Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: [
+//                                     Text('Current Value',
+//                                         style: TextStyle(color: grey)),
+//                                     const SizedBox(
+//                                       height: 5,
+//                                     ),
+//                                     Text("₹ 10,000,000.00",
+//                                         style: TextStyle(
+//                                             fontWeight: FontWeight.w500,
+//                                             fontSize: 20,
+//                                             color: black))
+//                                   ],
+//                                 ),
+//                                 Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: [
+//                                     Text('Overall Gain ',
+//                                         style: TextStyle(color: grey)),
+//                                     const SizedBox(
+//                                       height: 5,
+//                                     ),
+//                                     const Text("₹ 50,000.00",
+//                                         style: TextStyle(
+//                                             fontWeight: FontWeight.w500,
+//                                             fontSize: 20,
+//                                             color: Colors.lightGreen)),
+//                                   ],
+//                                 ),
+//                               ],
+//                             ),
+//                           ])),
+//                   const SizedBox(
+//                     height: 15,
+//                   ),
+//                   const Divider(
+//                     height: 1,
+//                   ),
+//                   ListTile(
+//                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
+//                     title: Text(
+//                       "View Details",
+//                       style:
+//                       TextStyle(color: darkBlue, fontWeight: FontWeight.w500),
+//                     ),
+//                     trailing: const Icon(
+//                       Icons.arrow_forward_ios_rounded,
+//                       size: 16,
+//                     ),
+//                   )
+//                 ]),
+//               ),
+//               getCard(
+//                   "Premium Portfolio",
+//                   "You don’t have any premium portfolios yet.",
+//                   "View Recommended Portfolios",
+//                   "assets/icons/doll.png"),
+//               getCard(
+//                   "One Click Mutual Funds",
+//                   "You don’t have any One Click Mutual Funds yet.",
+//                   "View Recommended",
+//                   null),
+//             ],
+//           )
+//         ]));
+//   }
+//
+//   getList() {
+//     return List.generate(
+//         2,
+//             (i) => Container(
+//           margin: const EdgeInsets.only(right: 15),
+//           width: MediaQuery.of(context).size.width * .8,
+//           child: Card(
+//               child: ListTile(
+//                 leading: Image.asset("assets/icons/ipo.png"),
+//                 tileColor: white,
+//                 title: Text("IPO - Initial Public Offering"),
+//                 subtitle: Container(
+//                     margin: EdgeInsets.only(top: 10),
+//                     child: Row(
+//                       children: [
+//                         Row(
+//                           children: [
+//                             Image.asset("assets/icons/open.png"),
+//                             SizedBox(
+//                               width: 5,
+//                             ),
+//                             Text("2 Open")
+//                           ],
+//                         ),
+//                         SizedBox(
+//                           width: 15,
+//                         ),
+//                         Row(
+//                           children: [
+//                             Image.asset("assets/icons/upcomming.png"),
+//                             SizedBox(
+//                               width: 5,
+//                             ),
+//                             Text("3 Upcoming")
+//                           ],
+//                         ),
+//                       ],
+//                     )),
+//               )),
+//         ));
+//   }
+//
+//   getCard(title, subtitle, viewText, image) {
+//     return Card(
+//       margin: const EdgeInsets.only(top: 15),
+//       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//         Container(
+//             padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+//             child:
+//             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//               ListTile(
+//                 title: Text(
+//                   title,
+//                   style: const TextStyle(
+//                       fontSize: 21, fontWeight: FontWeight.w500),
+//                 ),
+//                 trailing: image != null ? Image.asset(image) : SizedBox(),
+//                 contentPadding: EdgeInsets.zero,
+//               ),
+//               Text(
+//                 subtitle,
+//                 style: TextStyle(color: grey, fontSize: 18),
+//               )
+//             ])),
+//         const SizedBox(
+//           height: 15,
+//         ),
+//         const Divider(
+//           height: 1,
+//         ),
+//         ListTile(
+//           contentPadding: EdgeInsets.symmetric(horizontal: 15),
+//           title: Text(
+//             viewText,
+//             style: TextStyle(color: darkBlue, fontWeight: FontWeight.w500),
+//           ),
+//           trailing: const Icon(
+//             Icons.arrow_forward_ios_rounded,
+//             size: 16,
+//           ),
+//         )
+//       ]),
+//     );
+//   }
+// }
