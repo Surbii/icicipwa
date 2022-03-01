@@ -120,7 +120,7 @@ class AppDashboardState extends State<AppDashboard> {
           ],
         ),
         drawer: Drawer(
-          child: Column(
+          child: ListView(
               children: [
                 leftColumn("assets/icons/stocks.png", "Stocks"),
                 leftColumn("assets/icons/fo.png", "F&O"),
@@ -153,7 +153,7 @@ class AppDashboardState extends State<AppDashboard> {
                                 Provider.of<ThemeChanger>(context, listen: false).setTheme(Provider.of<ThemeChanger>(context, listen: false).getDark() == false?AppThemes.darkTheme():AppThemes.lightTheme());
                                 Navigator.pop(context);
                               },
-                              child: Text("Dark Mode", style: TextStyle(
+                              child: Text(Provider.of<ThemeChanger>(context, listen: true).getDark()?"Light Mode":"Dark Mode", style: TextStyle(
                                   fontSize: 14,
                                   color: Theme.of(context).textTheme.bodyText1?.color
                               )),
@@ -266,7 +266,7 @@ class AppDashboardState extends State<AppDashboard> {
                         label: Text(
                           "Analyse",
                           style: TextStyle(
-                              color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue,
+                              color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:darkBlue,
                               fontSize: 18,
                               fontWeight: FontWeight.w500),
                         ),
@@ -418,7 +418,7 @@ class AppDashboardState extends State<AppDashboard> {
                     title: Text(
                       "View Details",
                       style:
-                      TextStyle(color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.w500),
+                      TextStyle(color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.w500),
                     ),
                     trailing: const Icon(
                       Icons.arrow_forward_ios_rounded,
@@ -572,7 +572,7 @@ class AppDashboardState extends State<AppDashboard> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           title: Text(
             viewText,
-            style: TextStyle(color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.bold),
           ),
           trailing: const Icon(
             Icons.arrow_forward_ios_rounded,
@@ -622,7 +622,7 @@ class AppDashboardState extends State<AppDashboard> {
                     Text(
                       i == 0 ? "Register for Free" : "Pay Later with MTF",
                       style: TextStyle(
-                          color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.bold),
+                          color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:darkBlue, fontWeight: FontWeight.bold),
                     ),
                     Image.asset(i == 0
                         ? "assets/icons/freeHour.png"
@@ -675,7 +675,7 @@ class AppDashboardState extends State<AppDashboard> {
                   Container(
                     child: Row(
                       children: [
-                        Image.asset(leadingIcon, color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:null),
+                        Image.asset(leadingIcon, color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:null),
                         SizedBox(width: 5),
                         Text(title,
                             style: TextStyle(

@@ -120,7 +120,7 @@ class _WebDashboardState extends State<WebDashboard> {
                   Container(
                     child: Row(
                       children: [
-                        Image.asset(leadingIcon, color: Provider.of<ThemeChanger>(context).getDark()?Colors.orange:null),
+                        Image.asset(leadingIcon, color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.orange:null),
                         SizedBox(width: 5),
                         Text(title, style: TextStyle(
                             color: Theme.of(context).textTheme.bodyText1?.color,
@@ -369,7 +369,7 @@ class _WebDashboardState extends State<WebDashboard> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: Color(0xffDCDCDC).withOpacity(0.9)
+                    color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Color(0xffDCDCDC).withOpacity(0.2):Color(0xffDCDCDC).withOpacity(0.9)
                   )
                 ),
               ),
@@ -650,10 +650,10 @@ class _WebDashboardState extends State<WebDashboard> {
                         color: Color(0xffDCDCDC).withOpacity(0.5)
                       ),
                     ),
-                    color: Provider.of<ThemeChanger>(context, listen: false).getDark()?Colors.black:Colors.white,
+                    color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black:Colors.white,
                   ),
                   width: 170,
-                  child: Column(
+                  child: ListView(
                     children: [
                       leftColumn("assets/icons/stocks.png", "Stocks"),
                       leftColumn("assets/icons/fo.png", "F&O"),
@@ -685,7 +685,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                     onTap: (){
                                       Provider.of<ThemeChanger>(context, listen: false).setTheme(Provider.of<ThemeChanger>(context, listen: false).getDark() == false?AppThemes.darkTheme():AppThemes.lightTheme());
                                     },
-                                    child: Text("Dark Mode", style: TextStyle(
+                                    child: Text(Provider.of<ThemeChanger>(context, listen: true).getDark()?"Light Mode":"Dark Mode", style: TextStyle(
                                       fontSize: 14,
                                       color: Theme.of(context).textTheme.bodyText1?.color
                                     )),
@@ -983,7 +983,7 @@ class _WebDashboardState extends State<WebDashboard> {
                                       SizedBox(height: 15),
                                       showDetails == true?Container(
                                         padding: EdgeInsets.only(top: 25, bottom: 25, left: 40, right: 40),
-                                        color: Provider.of<ThemeChanger>(context).getDark()?Colors.black26:Color(0xffF5F6F7),
+                                        color: Provider.of<ThemeChanger>(context, listen: true).getDark()?Colors.black26:Color(0xffF5F6F7),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
